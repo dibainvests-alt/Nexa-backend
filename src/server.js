@@ -1,8 +1,6 @@
-require('dotenv').config();
 const express = require('express');
 const app = express();
 
-// IMPORTANT : importer la DB pour exécuter la connexion test
 const pool = require('./db');
 
 app.use(express.json());
