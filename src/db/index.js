@@ -1,10 +1,4 @@
 const { Pool } = require('pg');
-const dotenv = require('dotenv');
-
-// Charger le bon fichier .env uniquement en local
-if (process.env.NODE_ENV !== 'production') {
-  dotenv.config({ path: '.env.development' });
-}
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -12,7 +6,7 @@ const pool = new Pool(
   isProduction
     ? {
         connectionString: process.env.DATABASE_URL,
-        ssl: { rejectUnauthorized: false }
+        ssl: { rejectUnauthorized: false },
       }
     : {
         host: process.env.DB_HOST,
@@ -23,15 +17,12 @@ const pool = new Pool(
       }
 );
 
-// Connexion test immédiate
-(async () => {
-  try {
-    await pool.connect();
-    console.log('🗄️ PostgreSQL connected');
-  } catch (err) {
-    console.error('❌ PostgreSQL connection error:', err.message);
-    process.exit(1);
-  }
-})();
+// Test de connexion (non bloquant)
+pool
+  .query('SELECT 1')
+  .then(() => console.log('🗄️ PostgreSQL connected'))
+  .catch((err) =>
+    console.error('❌ PostgreSQL connection error:', err.message)
+  );
 
 module.exports = pool;

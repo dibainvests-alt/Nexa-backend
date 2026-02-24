@@ -1,14 +1,24 @@
 const express = require('express');
+const cors = require('cors');
+require('dotenv').config();
+
 const app = express();
 
-const pool = require('./db');
-
+// Middlewares globaux
+app.use(cors());
 app.use(express.json());
 
+// Routes
 const authRoutes = require('./routes/auth.routes');
 app.use('/api/auth', authRoutes);
 
-app.get('/health', (_, res) => res.json({ status: 'OK' }));
+// Health check (Railway)
+app.get('/health', (_, res) => {
+  res.status(200).json({ status: 'OK', env: process.env.NODE_ENV });
+});
 
+// Server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`🚀 NexaTank API running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`🚀 NexaTank API running on port ${PORT}`);
+});
