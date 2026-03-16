@@ -18,6 +18,9 @@ app.get('/health', (_, res) => {
 });
 
 // Server
+console.log("🚀 NODE_ENV:", process.env.NODE_ENV);
+console.log("🚀 DATABASE_URL:", process.env.DATABASE_URL);
+console.log("🚀 PORT:", process.env.PORT);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 NexaTank API running on port ${PORT}`);
