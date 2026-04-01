@@ -39,6 +39,7 @@ app.get('/health', (req, res) => {
 const authRoutes = require('./routes/auth.routes');
 app.use('/api/auth', authRoutes);
 
+
 // Tanks routes (calcul volume/hauteur)
 const tanksRoutes = require('./routes/tanks.routes');
 app.use('/api/tanks', tanksRoutes);
@@ -46,6 +47,10 @@ app.use('/api/tanks', tanksRoutes);
 // Routes protégées (JWT + rôles)
 const protectedRoutes = require('./routes/protected.routes');
 app.use('/api', protectedRoutes);
+
+const systemRoutes = require('./routes/system.routes');
+app.use('/api/system', systemRoutes);
+
 
 /* =========================
    ROUTE 404 (sécurité)
