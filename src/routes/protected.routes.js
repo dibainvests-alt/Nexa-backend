@@ -9,6 +9,8 @@ const {
   superAdminOnly,
 } = require('../middlewares/auth.middleware');
 
+const { validateUserId } = require('../middlewares/validation.middleware');
+
 /* =============================================================
    ROUTES DE TEST (EXISTANTES)
    ============================================================= */
@@ -56,7 +58,7 @@ router.get('/users', requireAuth, superAdminOnly, async (req, res) => {
 });
 
 // DELETE /api/users/:id - Supprimer un compte définitivement
-router.delete('/users/:id', requireAuth, superAdminOnly, async (req, res) => {
+router.delete('/users/:id', requireAuth, superAdminOnly, validateUserId, async (req, res) => {
   try {
     const { id } = req.params;
     await pool.query('DELETE FROM users WHERE id = $1', [id]);
