@@ -69,8 +69,11 @@ async function registerUser(req, res) {
  * LOGIN (IDENTIFICATION PAR CODE UNIQUEMENT)
  * Plus besoin du téléphone, le système identifie l'utilisateur via son code unique.
  */
+
 async function loginUser(req, res) {
   try {
+    console.log("BODY RECEIVED:", req.body);
+    console.log("TYPE:", typeof req.body.code);
     const { code } = req.body;
 
     if (!code) {
